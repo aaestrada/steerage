@@ -1,0 +1,9 @@
+{
+    "server": {
+        "load": {
+            "sampleInterval": 500
+        }
+    },
+    "connections": [],
+    "plugins": []
+}

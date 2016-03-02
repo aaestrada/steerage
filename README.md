@@ -5,18 +5,20 @@ Environment-aware server configuration for Hapi using [Confit](https://github.co
 ### API
 
 - `configure(options, /* optional */ callback)` - configures a Hapi server.
-    - `options` - configuration options.
-        - `basedir` - base directory to look for environment-based configuration files.
+    - `options` - `confit` configuration options.
+        - `basedir` - directory to look for configuration files.
         - `protocols` - custom protocols for `confit`.
     - `callback(error, server)` - an optional callback - omitting returns a promise.
+
+See also: [confit](https://github.com/krakenjs/confit).
 
 ### Manifest
 
 The resulting configuration (please see [Confit](https://github.com/krakenjs/confit)) should contain the following:
 
-- `server` - optional server options.
-- `connections` - array of server connections.
-- `plugins` - an array of plugins, with an optional `select` property.
+- `server` - optional [server options](http://hapijs.com/api#new-serveroptions).
+- `connections` - array of [server connections](http://hapijs.com/api#serverconnectionoptions).
+- `plugins` - an array of [plugins](http://hapijs.com/api#plugins), with an optional `select` property.
 
 Example:
 

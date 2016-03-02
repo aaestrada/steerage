@@ -1,0 +1,19 @@
+{
+    "server": {
+        "load": {
+            "sampleInterval": 1000
+        }
+    },
+    "connections": [
+        {
+            "port": 3000,
+            "labels": ["web"]
+        }
+    ],
+    "plugins": [
+        {
+            "register": "require:../fixtures/plugin.js",
+            "select": ["web"]
+        }
+    ]
+}

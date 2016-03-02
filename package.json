@@ -14,12 +14,13 @@
   "dependencies": {
     "babel-regenerator-runtime": "^6.3.13",
     "babel-runtime": "^6.3.19",
+    "caller": "^1.0.1",
     "confit": "^2.0.3",
     "joi": "^8.0.4",
     "shortstop-handlers": "^1.0.0"
   },
   "peerDependencies": {
-      "hapi": "^13.0.0"
+    "hapi": "^13.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.1.4",
