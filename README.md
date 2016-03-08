@@ -1,6 +1,6 @@
 # hapi-configure
 
-Environment-aware server configuration for Hapi using [Confit](https://github.com/krakenjs/confit).
+Environment-aware server configuration for [Hapi](http://hapijs.com) using [Confit](https://github.com/krakenjs/confit).
 
 ### API
 
@@ -25,7 +25,9 @@ Example:
 ```json
 {
     "server": {
-
+        "load": {
+            "sampleInterval": 500
+        }
     },
     "connections": [
         {
@@ -41,7 +43,12 @@ Example:
         {
             "register": "require:good",
             "options": {
-
+                "reporters": [{
+                    "reporter": "require:good-console",
+                    "events": {
+                        "log": ["error", "medium"]
+                    }
+                }]
             },
             "select": ["api", "web"]
         }
