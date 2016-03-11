@@ -14,7 +14,7 @@ See also: [confit](https://github.com/krakenjs/confit).
 
 ### Manifest
 
-The resulting configuration (please see [Confit](https://github.com/krakenjs/confit)) should contain the following:
+The resulting configuration (please see [Confit](https://github.com/krakenjs/confit)) should contain the (minimum) following:
 
 - `server` - optional [server options](http://hapijs.com/api#new-serveroptions).
 - `connections` - array of [server connections](http://hapijs.com/api#serverconnectionoptions).
@@ -56,6 +56,8 @@ Example:
 }
 ```
 
+In addition, the [confit](https://github.com/krakenjs/confit) configuration will be accessible on `server.app.config`.
+
 ### Usage
 
 ```javascript
@@ -70,5 +72,8 @@ HapiConfigure({ basedir: Path.join(__dirname, 'config')}, (error, server) => {
     }
 
     //Do something with server object.
+
+    //Also, config values availble via
+    server.app.config.get('key');
 });
 ```
