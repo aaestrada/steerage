@@ -9,4 +9,4 @@ register.attributes = {
     version: '1.0.0'
 };
 
-module.exports = register;
+module.exports.register = register;
