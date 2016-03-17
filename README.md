@@ -17,10 +17,10 @@ See also: [confit](https://github.com/krakenjs/confit).
 The resulting configuration (please see [Confit](https://github.com/krakenjs/confit)) should contain the (minimum) following:
 
 - `server` - optional [server options](http://hapijs.com/api#new-serveroptions).
-- `connections` - array of [server connections](http://hapijs.com/api#serverconnectionoptions).
-- `plugins` - an array of [plugins](http://hapijs.com/api#plugins), with an optional `select` property.
+- `connections` - object defining [server connections](http://hapijs.com/api#serverconnectionoptions), with key name being a default label.
+- `plugins` - an object defining [plugins](http://hapijs.com/api#plugins), with an optional `select` property.
 
-Example:
+Example (new as of 2.0):
 
 ```json
 {
@@ -29,18 +29,18 @@ Example:
             "sampleInterval": 500
         }
     },
-    "connections": [
-        {
+    "connections": {
+        "api": {
             "labels": ["api"],
             "port": 9000
         },
-        {
+        "web": {
             "labels": ["web"],
             "port": 8000
         }
-    ],
-    "plugins": [
-        {
+    },
+    "plugins": {
+        "good": {
             "register": "require:good",
             "options": {
                 "reporters": [{
@@ -52,7 +52,7 @@ Example:
             },
             "select": ["api", "web"]
         }
-    ]
+    }
 }
 ```
 

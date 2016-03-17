@@ -1,7 +1,4 @@
 {
     "plugins": [
-        {
-            "register": 1
-        }
     ]
 }

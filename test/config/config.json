@@ -4,6 +4,6 @@
             "sampleInterval": 500
         }
     },
-    "connections": [],
-    "plugins": []
+    "connections": {},
+    "plugins": {}
 }

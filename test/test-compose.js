@@ -18,18 +18,18 @@ Test('test compose', async t => {
                 sampleInterval: 1000
             }
         },
-        connections: [
-            {
+        connections: {
+            web: {
                 port: 3000,
                 labels: ['web']
             }
-        ],
-        plugins: [
-            plugin('testPlugin', '1.0.0', (server, options, next) => {
+        },
+        plugins: {
+            testPlugin: plugin('testPlugin', '1.0.0', (server, options, next) => {
                 t.pass('registered plugin.');
                 next();
             })
-        ]
+        }
     };
 
     try {

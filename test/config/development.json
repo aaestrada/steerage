@@ -4,16 +4,16 @@
             "sampleInterval": 1000
         }
     },
-    "connections": [
-        {
+    "connections": {
+        "web": {
             "port": 3000,
             "labels": ["web"]
         }
-    ],
-    "plugins": [
-        {
+    },
+    "plugins": {
+        "testPlugin": {
             "register": "require:../fixtures/plugin.js",
             "select": ["web"]
         }
-    ]
+    }
 }
