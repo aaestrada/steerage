@@ -1,7 +1,7 @@
 {
     "server": {
-        "load": {
-            "sampleInterval": 1000
+        "debug": {
+            "log": ["debug"]
         }
     },
     "connections": {
@@ -13,6 +13,25 @@
     "plugins": {
         "testPlugin": {
             "register": "require:../fixtures/plugin.js",
+            "select": ["web"]
+        }
+    },
+    "routes": {
+        "/test": {
+            "method": "GET",
+            "handler": {
+                "module": "require:../fixtures/handler.js",
+                "method": "createHandler",
+                "arguments": [
+                    "testArgument"
+                ]
+            },
+            "config": {},
+            "select": ["web"]
+        },
+        "/test2": {
+            "method": "GET",
+            "handler": "require:../fixtures/handler.js",
             "select": ["web"]
         }
     }

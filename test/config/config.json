@@ -1,9 +1,11 @@
 {
     "server": {
-        "load": {
-            "sampleInterval": 500
+        "debug": false
+    },
+    "connections": {
+        "api": {
+            "port": 4000
         }
     },
-    "connections": {},
     "plugins": {}
 }

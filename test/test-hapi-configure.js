@@ -7,16 +7,23 @@ import Path from 'path';
 Test('test hapi-configure', t => {
 
     t.test('configures', async t => {
-        t.plan(5);
+        t.plan(6);
 
         try {
             const server = await HapiConfigure();
 
             t.ok(server, 'server not null.');
-            t.equal(server.settings.load.sampleInterval, 1000, 'override server properties.');
-            t.equal(server.connections.length, 1, 'set connections.');
+            t.ok(server.settings.debug.log, 'override server properties.');
+            t.equal(server.connections.length, 2, 'set connections.');
             t.ok(server.select('web').registrations.testPlugin, 'plugins present on connection.');
             t.ok(server.app.config.get('server'), 'server.app.config accessible.');
+
+            const response = await server.select('web').inject({
+                method: 'GET',
+                url: '/test'
+            });
+
+            t.equal(response.payload, 'testArgument', 'added arguments to handler factory.');
         }
         catch (error) {
             console.log(error.stack);
