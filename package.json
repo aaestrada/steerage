@@ -17,7 +17,8 @@
     "caller": "^1.0.1",
     "confit": "^2.0.3",
     "joi": "^8.0.4",
-    "shortstop-handlers": "^1.0.0"
+    "shortstop-handlers": "^1.0.0",
+    "topo": "^2.0.0"
   },
   "peerDependencies": {
     "hapi": "^13.0.0"

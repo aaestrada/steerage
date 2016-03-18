@@ -7,7 +7,7 @@ import Path from 'path';
 Test('test hapi-configure', t => {
 
     t.test('configures', async t => {
-        t.plan(6);
+        t.plan(7);
 
         try {
             const server = await HapiConfigure();
@@ -16,6 +16,11 @@ Test('test hapi-configure', t => {
             t.ok(server.settings.debug.log, 'override server properties.');
             t.equal(server.connections.length, 2, 'set connections.');
             t.ok(server.select('web').registrations.testPlugin, 'plugins present on connection.');
+
+            const plugins = Object.keys(server.select('web').registrations);
+
+            t.equal(plugins[0], 'testPlugin2', 're-ordered plugins.');
+
             t.ok(server.app.config.get('server'), 'server.app.config accessible.');
 
             const response = await server.select('web').inject({

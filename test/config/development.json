@@ -11,8 +11,9 @@
         }
     },
     "plugins": {
-        "testPlugin": {
-            "register": "require:../fixtures/plugin.js",
+        "testPlugin2": {
+            "register": "require:../fixtures/plugin2.js",
+            "before": "testPlugin",
             "select": ["web"]
         }
     },

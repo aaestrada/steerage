@@ -18,14 +18,18 @@ The resulting configuration (please see [Confit](https://github.com/krakenjs/con
 
 - `server` - optional [server options](http://hapijs.com/api#new-serveroptions).
 - `connections` - object defining [server connections](http://hapijs.com/api#serverconnectionoptions), with key name being a default label.
-- `plugins` - an object defining [plugins](http://hapijs.com/api#plugins), with an optional `select` property.
-- `routes` - an object defining [routes](http://hapijs.com/tutorials/routing), with keys representing paths.
+- `plugins` - an object defining [plugins](http://hapijs.com/api#plugins), with an optional additional properties:
+    - `select` - passed to `register`.
+    - `before` - a string or array of strings of plugin names (keys in the `plugins` object) used to reorder.
+    - `after` - a string or array of strings of plugin names used to reorder.
+- `routes` - an object defining [routes](http://hapijs.com/tutorials/routing), with keys representing paths and in addition to standard `handler` property:
     - `handler` - can be an object describing how to load the handler.
         - `module` - the module, which in absence of a factory method is expected to be a factory.
         - `method` - the factory method, if anything other than the top level export.
         - `arguments` - an array of arguments to apply to the factory.
 
-Example (new as of 2.0):
+Example:
+
 
 ```json
 {
