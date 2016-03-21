@@ -37,8 +37,8 @@ Example:
 ```json
 {
     "server": {
-        "load": {
-            "sampleInterval": 500
+        "debug": {
+            "log": ["debug"]
         }
     },
     "connections": {
