@@ -110,5 +110,5 @@ HapiConfigure({ basedir: Path.join(__dirname, 'config')}, (error, server) => {
 You can also run from the command line, assuming you have a configuration that doesn't rely on performing post-config steps.
 
 ```shell
-hapi-configure ./config`
+hapi-configure ./config
 ```
