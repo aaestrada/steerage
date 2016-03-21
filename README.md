@@ -28,9 +28,10 @@ The resulting configuration (please see [Confit](https://github.com/krakenjs/con
     - `after` - a string or array of strings of plugin names used to reorder.
 
 In addition to `handler` property in `routes`, `handler` can be an object defining how to create the handler, with:
-    - `module` - the module (or file), which in absence of a factory method is expected to be a factory.
-    - `method` - the factory method, if anything other than the top level export.
-    - `arguments` - an array of arguments to apply to the factory.
+
+- `module` - the module (or file), which in absence of a factory method is expected to be a factory.
+- `method` - the factory method, if anything other than the top level export.
+- `arguments` - an array of arguments to apply to the factory.
 
 Example:
 
