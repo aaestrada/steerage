@@ -18,7 +18,8 @@
         }
     },
     "routes": {
-        "/test": {
+        "testRoute": {
+            "path": "/test",
             "method": "GET",
             "handler": {
                 "module": "require:../fixtures/handler.js",
@@ -30,7 +31,8 @@
             "config": {},
             "select": ["web"]
         },
-        "/test2": {
+        "testRoute2": {
+            "path": "/test2",
             "method": "GET",
             "handler": "require:../fixtures/handler.js",
             "select": ["web"]
