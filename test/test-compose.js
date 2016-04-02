@@ -10,7 +10,7 @@ const plugin = (name, version, register) => {
 };
 
 Test('test compose', async t => {
-    t.plan(5);
+    t.plan(8);
 
     const manifest = {
         server: {
@@ -29,6 +29,24 @@ Test('test compose', async t => {
                 t.pass('registered plugin.');
                 next();
             })
+        },
+        routes: {
+            testRoute: {
+                path: '/test',
+                method: 'GET',
+                handler: {
+                    module: function () {
+                        t.pass('added routes.');
+                        t.ok(this.server, 'server passed in context.');
+                        t.ok(this.target, 'target passed in context.');
+
+                        return function (request, reply) {
+                            reply('success.');
+                        }
+                    },
+                    select: 'web'
+                }
+            }
         }
     };
 

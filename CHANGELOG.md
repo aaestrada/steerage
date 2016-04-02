@@ -1,3 +1,6 @@
+### V3.1.0
+
+- Bind a context to the route factory so that `server` and `target` can be read.
 
 ### V3.0.0
 
