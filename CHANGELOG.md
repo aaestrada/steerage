@@ -1,3 +1,7 @@
+### V3.2.0
+
+- Expose `compose` in exports.
+
 ### V3.1.0
 
 - Bind a context to the route factory so that `server` and `target` can be read.

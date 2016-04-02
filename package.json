@@ -1,7 +1,7 @@
 {
   "name": "hapi-configure",
   "description": "Environment-aware server configuration for Hapi using Confit.",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",

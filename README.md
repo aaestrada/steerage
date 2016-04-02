@@ -4,13 +4,18 @@ Environment-aware server configuration for [Hapi](http://hapijs.com) using [Conf
 
 ### API
 
-- `configure(options, /* optional */ callback)` - configures a Hapi server.
-    - `options` - `confit` configuration options.
-        - `basedir` - directory to look for configuration files.
-        - `protocols` - custom protocols for `confit`.
-    - `callback(error, server)` - an optional callback - omitting returns a promise.
+`hapi-configure` exports a function to configure a Hapi server.
+
+It takes the following arguments:
+
+- `options` - `confit` (optional) configuration options.
+    - `basedir` - directory to look for configuration files.
+    - `protocols` - custom protocols for `confit`.
+- `callback(error, server)` - an optional callback - omitting returns a promise.
 
 See also: [confit](https://github.com/krakenjs/confit).
+
+In addition, `hapi-configure` exports the `compose` function for bypassing `confit` and composing directly.
 
 ### Manifest
 
@@ -97,14 +102,55 @@ import HapiConfigure from 'hapi-configure';
 //Note: will return a promise if no callback.
 HapiConfigure({ basedir: Path.join(__dirname, 'config')}, (error, server) => {
     if (error) {
-        console.log(error);
+        console.error(error.stack);
         return;
     }
 
-    //Do something with server object.
+    //Do other stuffs with server object.
 
     //Also, config values availble via
     server.app.config.get('key');
+
+    server.start(() => {
+        for (let connection of server.connections) {
+            console.log(`${connection.settings.labels} server running at ${connection.info.uri}`)
+        }
+    });
+});
+```
+
+Also, when composing directly (generally not super useful):
+
+```javascript
+import HapiConfigure from 'hapi-configure';
+
+HapiConfigure.compose({
+    connections: {
+        web: {
+            port: 3000,
+            labels: ['web']
+        }
+    },
+    routes: {
+        testRoute: {
+            path: '/test',
+            method: 'GET',
+            handler: function (request, reply) {
+                reply('success.');
+            }
+        }
+    }
+}, (error, server) => {
+    if (error) {
+        console.error(error.stack);
+        return;
+    }
+
+    server.start(() => {
+        for (let connection of server.connections) {
+            console.log(`${connection.settings.labels} server running at ${connection.info.uri}`)
+        }
+    });
 });
 ```
 

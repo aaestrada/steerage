@@ -1,7 +1,7 @@
 'use strict';
 
 import Test from 'tape';
-import Compose from '../dist/lib/compose';
+import { compose as Compose } from '../dist/lib';
 
 const plugin = (name, version, register) => {
     register.attributes = {name, version};
