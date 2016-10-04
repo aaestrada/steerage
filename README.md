@@ -1,25 +1,26 @@
-# hapi-configure
+# steerage
 
-Environment-aware server configuration for [Hapi](http://hapijs.com) using [Confit](https://github.com/krakenjs/confit).
+[Hapi](http://hapijs.com) composition tool leveraging [Confidence](https://github.com/hapijs/confidence).
+
+Supports [Shortstop](https://github.com/krakenjs/shortstop) handlers for superpowers.
 
 ### API
 
-`hapi-configure` exports a function to configure a Hapi server.
+`steerage` exports a function to configure a Hapi server.
 
 It takes the following arguments:
 
-- `options` - `confit` (optional) configuration options.
-    - `basedir` - directory to look for configuration files.
-    - `protocols` - custom protocols for `confit`.
+- `options`
+    - `config` - a fully resolved path to a configuration document (relative paths in this document are from the document's location).
+    - `protocols` - optional additional custom protocols for `shortstop`.
+    - `environment` - optional additional criteria for `confidence` property resolution.
 - `callback(error, server)` - an optional callback - omitting returns a promise.
 
-See also: [confit](https://github.com/krakenjs/confit).
-
-In addition, `hapi-configure` exports the `compose` function for bypassing `confit` and composing directly.
+In addition, `steerage` exports the `compose` function for bypassing `confidence` and `shortstop` to compose directly.
 
 ### Manifest
 
-The resulting configuration (please see [Confit](https://github.com/krakenjs/confit)) should contain the (minimum) following:
+The resulting configuration (please see [Confidence](https://github.com/hapijs/confidence)) should contain the (minimum) following:
 
 - `server` - optional [server options](http://hapijs.com/api#new-serveroptions).
 - `connections` - object defining [server connections](http://hapijs.com/api#serverconnectionoptions), with key name being a default label.
@@ -47,17 +48,20 @@ Example:
 {
     "server": {
         "debug": {
-            "log": ["debug"]
+            "log": {
+                "$filter": "env",
+                "$default": ["debug"],
+                "production": ["warn"]
+            }
         }
     },
     "connections": {
         "api": {
-            "labels": ["api"],
             "port": 9000
         },
         "web": {
-            "labels": ["web"],
-            "port": 8000
+            "port": 8000,
+            "labels": ["web"]
         }
     },
     "plugins": {
@@ -67,7 +71,11 @@ Example:
                 "reporters": [{
                     "reporter": "require:good-console",
                     "events": {
-                        "log": ["error", "medium"]
+                        "log": {
+                            "$filter": "env",
+                            "$default": ["error", "medium", "info", "debug"],
+                            "production": ["error", "medium"]
+                        }
                     }
                 }]
             },
@@ -91,16 +99,16 @@ Example:
 }
 ```
 
-In addition, the [confit](https://github.com/krakenjs/confit) configuration will be accessible on `server.app.config`.
+In addition, the [Confidence](https://github.com/hapijs/confidence) configuration store will be accessible on `server.app.config`.
 
 ### Usage
 
 ```javascript
 import Path from 'path';
-import HapiConfigure from 'hapi-configure';
+import Steerage from 'steerage';
 
 //Note: will return a promise if no callback.
-HapiConfigure({ basedir: Path.join(__dirname, 'config')}, (error, server) => {
+Steerage({ config: Path.join(__dirname, 'config', 'config.json')}, (error, server) => {
     if (error) {
         console.error(error.stack);
         return;
@@ -108,43 +116,8 @@ HapiConfigure({ basedir: Path.join(__dirname, 'config')}, (error, server) => {
 
     //Do other stuffs with server object.
 
-    //Also, config values availble via
-    server.app.config.get('key');
-
-    server.start(() => {
-        for (let connection of server.connections) {
-            console.log(`${connection.settings.labels} server running at ${connection.info.uri}`)
-        }
-    });
-});
-```
-
-Also, when composing directly (generally not super useful):
-
-```javascript
-import HapiConfigure from 'hapi-configure';
-
-HapiConfigure.compose({
-    connections: {
-        web: {
-            port: 3000,
-            labels: ['web']
-        }
-    },
-    routes: {
-        testRoute: {
-            path: '/test',
-            method: 'GET',
-            handler: function (request, reply) {
-                reply('success.');
-            }
-        }
-    }
-}, (error, server) => {
-    if (error) {
-        console.error(error.stack);
-        return;
-    }
+    //Also, config values available via server.app.config, for example:
+    server.app.config.get('/server');
 
     server.start(() => {
         for (let connection of server.connections) {
@@ -159,5 +132,5 @@ HapiConfigure.compose({
 You can also run from the command line, assuming you have a configuration that doesn't rely on performing post-config steps.
 
 ```shell
-hapi-configure ./config
+steerage ./config/config.json
 ```

@@ -2,11 +2,10 @@
 
 'use strict';
 
-const Configure = require('../dist/lib').default;
+const Configure = require('../lib');
 const Path = require('path');
 
-Configure({ basedir:  Path.resolve(process.argv[2]) })
-.then((server) => {
+Configure({ config:  Path.resolve(Path.resolve(process.argv[2])) }).then((server) => {
     server.start((error) => {
         if (error) {
             throw error;

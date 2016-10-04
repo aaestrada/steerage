@@ -1,16 +1,19 @@
 'use strict';
 
-import Test from 'tape';
-import HapiConfigure from '../dist/lib';
-import Path from 'path';
+const Test = require('tape');
+const Steerage = require('../lib');
+const Async = require('../lib/async');
+const Path = require('path');
 
-Test('test hapi-configure', t => {
+Test('test steerage', (t) => {
 
-    t.test('configures', async t => {
+    t.test('configures', Async(function *(t) {
         t.plan(7);
 
         try {
-            const server = await HapiConfigure();
+            const server = yield Steerage({
+                config: Path.join(__dirname, 'fixtures', 'config', 'config.json')
+            });
 
             t.ok(server, 'server not null.');
             t.ok(server.settings.debug.log, 'override server properties.');
@@ -21,9 +24,9 @@ Test('test hapi-configure', t => {
 
             t.equal(plugins[0], 'testPlugin2', 're-ordered plugins.');
 
-            t.ok(server.app.config.get('server'), 'server.app.config accessible.');
+            t.ok(server.app.config.get('/server'), 'server.app.config accessible.');
 
-            const response = await server.select('web').inject({
+            const response = yield server.select('web').inject({
                 method: 'GET',
                 url: '/test'
             });
@@ -33,19 +36,19 @@ Test('test hapi-configure', t => {
         catch (error) {
             console.log(error.stack);
         }
-    });
+    }));
 
-    t.test('errors', async t => {
+    t.test('errors', Async(function *(t) {
         t.plan(1);
 
         try {
-            const server = await HapiConfigure({
-                basedir: Path.join(__dirname, 'fixtures/badconfig')
+            const server = yield Steerage({
+                config: Path.join(__dirname, 'fixtures', 'badconfig', 'config.json')
             });
         }
         catch (error) {
             t.equal(error.name, 'ValidationError', 'got validation error.');
         }
-    });
+    }));
 
 });
