@@ -1,18 +1,32 @@
 {
     "server": {
         "debug": {
-            "log": ["debug"]
+            "log": {
+                "$filter": "env",
+                "$default": ["debug"],
+                "production": ["warn"]
+            }
         }
     },
     "connections": {
+        "api": {
+            "port": 4000
+        },
         "web": {
             "port": 3000,
             "labels": ["web"]
         }
     },
     "plugins": {
+        "testPlugin": {
+            "register": {
+                "$filter": "env",
+                "$default": "require:../devPlugin.js",
+                "production": "require:../plugin.js"
+            }
+        },
         "testPlugin2": {
-            "register": "require:../fixtures/plugin2.js",
+            "register": "require:../otherPlugin.js",
             "before": "testPlugin",
             "select": ["web"]
         }
@@ -22,7 +36,7 @@
             "path": "/test",
             "method": "GET",
             "handler": {
-                "module": "require:../fixtures/handler.js",
+                "module": "require:../handler.js",
                 "method": "createHandler",
                 "arguments": [
                     "testArgument"
@@ -34,7 +48,7 @@
         "testRoute2": {
             "path": "/test2",
             "method": "GET",
-            "handler": "require:../fixtures/handler.js",
+            "handler": "require:../handler.js",
             "select": ["web"]
         }
     }

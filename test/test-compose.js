@@ -1,7 +1,8 @@
 'use strict';
 
-import Test from 'tape';
-import { compose as Compose } from '../dist/lib';
+const Test = require('tape');
+const Configure = require('../lib');
+const Async = require('../lib/async');
 
 const plugin = (name, version, register) => {
     register.attributes = {name, version};
@@ -9,7 +10,7 @@ const plugin = (name, version, register) => {
     return register;
 };
 
-Test('test compose', async t => {
+Test('test compose', Async(function *(t) {
     t.plan(8);
 
     const manifest = {
@@ -51,7 +52,7 @@ Test('test compose', async t => {
     };
 
     try {
-        const server = await Compose(manifest);
+        const server = yield Configure.compose(manifest);
 
         t.ok(server, 'server not null.');
         t.equal(server.settings.load.sampleInterval, 1000, 'set server properties.');
@@ -61,4 +62,5 @@ Test('test compose', async t => {
     catch (error) {
         console.log(error.stack);
     }
-});
+
+}));

@@ -5,8 +5,7 @@
 const Configure = require('../dist/lib').default;
 const Path = require('path');
 
-Configure({ basedir:  Path.resolve(process.argv[2]) })
-.then((server) => {
+Configure({ basedir:  Path.resolve(process.argv[2]) }).then((server) => {
     server.start((error) => {
         if (error) {
             throw error;

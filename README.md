@@ -122,9 +122,9 @@ HapiConfigure({ basedir: Path.join(__dirname, 'config')}, (error, server) => {
 Also, when composing directly (generally not super useful):
 
 ```javascript
-import HapiConfigure from 'hapi-configure';
+import { compose } from 'hapi-configure';
 
-HapiConfigure.compose({
+compose({
     connections: {
         web: {
             port: 3000,
