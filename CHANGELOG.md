@@ -1,3 +1,9 @@
+
+### V4.0.0
+
+- Converted to Node.js 6.0 supported ES6
+- Replaced `confit` with `confidence`.
+
 ### V3.2.0
 
 - Expose `compose` in exports.
