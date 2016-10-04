@@ -11,7 +11,7 @@ Supports [Shortstop](https://github.com/krakenjs/shortstop) handlers for superpo
 It takes the following arguments:
 
 - `options`
-    - `config` - a fully resolved path to a configuration document.
+    - `config` - a fully resolved path to a configuration document (relative paths in this document are from the document's location).
     - `protocols` - optional additional custom protocols for `shortstop`.
     - `environment` - optional additional criteria for `confidence` property resolution.
 - `callback(error, server)` - an optional callback - omitting returns a promise.
@@ -116,7 +116,7 @@ HapiConfigure({ config: Path.join(__dirname, 'config', 'config.json')}, (error, 
 
     //Do other stuffs with server object.
 
-    //Also, config values availble via
+    //Also, config values available via server.app.config, for example:
     server.app.config.get('/server');
 
     server.start(() => {
