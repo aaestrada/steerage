@@ -1,17 +1,17 @@
 'use strict';
 
 const Test = require('tape');
-const Configure = require('../lib');
+const Steerage = require('../lib');
 const Async = require('../lib/async');
 const Path = require('path');
 
-Test('test hapi-configure', (t) => {
+Test('test steerage', (t) => {
 
     t.test('configures', Async(function *(t) {
         t.plan(7);
 
         try {
-            const server = yield Configure({
+            const server = yield Steerage({
                 config: Path.join(__dirname, 'fixtures', 'config', 'config.json')
             });
 
@@ -42,7 +42,7 @@ Test('test hapi-configure', (t) => {
         t.plan(1);
 
         try {
-            const server = yield Configure({
+            const server = yield Steerage({
                 config: Path.join(__dirname, 'fixtures', 'badconfig', 'config.json')
             });
         }

@@ -1,4 +1,4 @@
-# hapi-configure
+# steerage
 
 [Hapi](http://hapijs.com) composition tool leveraging [Confidence](https://github.com/hapijs/confidence).
 
@@ -6,7 +6,7 @@ Supports [Shortstop](https://github.com/krakenjs/shortstop) handlers for superpo
 
 ### API
 
-`hapi-configure` exports a function to configure a Hapi server.
+`steerage` exports a function to configure a Hapi server.
 
 It takes the following arguments:
 
@@ -16,7 +16,7 @@ It takes the following arguments:
     - `environment` - optional additional criteria for `confidence` property resolution.
 - `callback(error, server)` - an optional callback - omitting returns a promise.
 
-In addition, `hapi-configure` exports the `compose` function for bypassing `confidence` and `shortstop` to compose directly.
+In addition, `steerage` exports the `compose` function for bypassing `confidence` and `shortstop` to compose directly.
 
 ### Manifest
 
@@ -105,10 +105,10 @@ In addition, the [Confidence](https://github.com/hapijs/confidence) configuratio
 
 ```javascript
 import Path from 'path';
-import HapiConfigure from 'hapi-configure';
+import Steerage from 'steerage';
 
 //Note: will return a promise if no callback.
-HapiConfigure({ config: Path.join(__dirname, 'config', 'config.json')}, (error, server) => {
+Steerage({ config: Path.join(__dirname, 'config', 'config.json')}, (error, server) => {
     if (error) {
         console.error(error.stack);
         return;
@@ -132,5 +132,5 @@ HapiConfigure({ config: Path.join(__dirname, 'config', 'config.json')}, (error, 
 You can also run from the command line, assuming you have a configuration that doesn't rely on performing post-config steps.
 
 ```shell
-hapi-configure ./config/config.json
+steerage ./config/config.json
 ```
