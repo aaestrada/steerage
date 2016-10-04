@@ -1,8 +1,9 @@
 
 ### V4.0.0
 
-- Converted to Node.js 6.0 supported ES6
+- Converted to Node.js 6.0 supported ES6 (obviously requires Node 6).
 - Replaced `confit` with `confidence`.
+- API changes: `options` are `config`, `protocol`, and `environment`.
 
 ### V3.2.0
 
