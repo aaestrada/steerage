@@ -12,6 +12,7 @@ It takes the following arguments:
 
 - `options`
     - `config` - a fully resolved path to a configuration document (relative paths in this document are from the document's location).
+    - `onconfig(manifest, callback)` - an optional hook for modifying (`shortstop` resolved) config prior to compose.
     - `protocols` - optional additional custom protocols for `shortstop`.
     - `environment` - optional additional criteria for `confidence` property resolution.
 - `callback(error, server)` - an optional callback - omitting returns a promise.

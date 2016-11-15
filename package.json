@@ -15,13 +15,12 @@
     "co": "^4.6.0",
     "confidence": "^3.0.1",
     "entries": "^1.0.1",
-    "joi": "^8.0.4",
     "shortstop": "^1.0.3",
     "shortstop-handlers": "^1.0.1",
     "topo": "^2.0.0"
   },
   "peerDependencies": {
-    "hapi": "^13.0.0"
+    "hapi": "^15.0.0"
   },
   "devDependencies": {
     "eslint": "^3.7.1",

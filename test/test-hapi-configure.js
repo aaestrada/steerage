@@ -38,16 +38,22 @@ Test('test steerage', (t) => {
         }
     }));
 
-    t.test('errors', Async(function *(t) {
-        t.plan(1);
+    t.test('overrides', Async(function *(t) {
+        t.plan(2);
 
         try {
             const server = yield Steerage({
-                config: Path.join(__dirname, 'fixtures', 'badconfig', 'config.json')
+                config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
+                onconfig: (config, callback) => {
+                    t.pass('called onconfig');
+                    callback(null, config);
+                }
             });
+
+            t.ok(server, 'server not null.');
         }
         catch (error) {
-            t.equal(error.name, 'ValidationError', 'got validation error.');
+            console.log(error.stack);
         }
     }));
 
