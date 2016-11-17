@@ -17,6 +17,7 @@
     "entries": "^1.0.1",
     "shortstop": "^1.0.3",
     "shortstop-handlers": "^1.0.1",
+    "shush": "^1.0.0",
     "topo": "^2.0.0"
   },
   "peerDependencies": {

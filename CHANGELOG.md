@@ -1,4 +1,8 @@
 
+### v3.0.0
+
+- Does not expose `compose`.
+
 ### V2.0.0
 
 - Does not validate schema any longer.
