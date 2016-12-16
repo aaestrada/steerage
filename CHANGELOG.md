@@ -1,4 +1,8 @@
 
+### v3.0.2
+
+- Updated hapi support to include 15 and 16.
+
 ### v3.0.1
 
 - Fixed disabling a plugin from being registered via hook.

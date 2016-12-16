@@ -1,6 +1,6 @@
 # steerage
 
-[Hapi](http://hapijs.com) composition tool leveraging [Confidence](https://github.com/hapijs/confidence).
+[Hapi](http://hapijs.com) (version `>= 15.0.0 < 17.0.0`) composition tool leveraging [Confidence](https://github.com/hapijs/confidence).
 
 Supports [Shortstop](https://github.com/krakenjs/shortstop) handlers for superpowers.
 
