@@ -32,15 +32,6 @@ The resulting configuration (please see [Confidence](https://github.com/hapijs/c
     - `before` - a string or array of strings of plugin names (keys in the `plugins` object) used to reorder.
     - `after` - a string or array of strings of plugin names used to reorder.
 
-In addition to `handler` property in `routes`, `handler` can be an object defining how to create the handler, with:
-
-- `module` - the module (or file), which in absence of a factory method is expected to be a factory that returns a handler.
-- `method` - the factory method, if anything other than the top level export.
-- `arguments` - an array of arguments to apply to the factory.
-
-In the case of all route factories, the context (`this`) will contain both the `server` and `target` (if a `select` is used).
-A `function` should always be used rather than a arrow function for the factory so that this context can be bound.
-
 Example:
 
 ```json
