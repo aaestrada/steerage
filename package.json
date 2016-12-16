@@ -21,13 +21,13 @@
     "topo": "^2.0.0"
   },
   "peerDependencies": {
-    "hapi": "^15.0.0"
+    "hapi": ">=15.0.0 <17.0.0"
   },
   "devDependencies": {
     "eslint": "^3.7.1",
     "eslint-config-hapi": "^10.0.0",
     "eslint-plugin-hapi": "^4.0.0",
-    "hapi": "^15.0.0",
+    "hapi": "^16.0.0",
     "istanbul": "^0.4.1",
     "tape": "^4.2.2"
   },
