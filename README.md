@@ -18,7 +18,7 @@ It takes the following arguments:
         - `connection(name, config, callback)` - hook for modifying the server connection config before added.
         - `register(name, config, callback)` - hook for modifying the plugin config before register.
     - `protocols` - optional additional custom protocols for `shortstop`.
-    - `environment` - optional additional criteria for `confidence` property resolution.
+    - `environment` - optional additional criteria for `confidence` property resolution and defaults to `{ env: process.env }`.
 - `callback(error, server)` - an optional callback - omitting returns a promise.
 
 ### Manifest
@@ -40,7 +40,7 @@ Example:
     "server": {
         "debug": {
             "log": {
-                "$filter": "env",
+                "$filter": "env.NODE_ENV",
                 "$default": ["debug"],
                 "production": ["warn"]
             }
@@ -48,10 +48,10 @@ Example:
     },
     "connections": {
         "api": {
-            "port": 9000
+            "port": "env:API_PORT"
         },
         "web": {
-            "port": 8000,
+            "port": "env:WEB_PORT",
             "labels": ["web"]
         }
     },

@@ -40,7 +40,9 @@ Test('test steerage', (t) => {
             const server = yield Steerage({
                 config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
                 environment: {
-                    NODE_ENV: 'production'
+                    env: {
+                        NODE_ENV: 'production'
+                    }
                 }
             });
 

@@ -2,7 +2,7 @@
     "server": {
         "debug": {
             "log": {
-                "$filter": "NODE_ENV",
+                "$filter": "env.NODE_ENV",
                 "$default": ["debug"],
                 "production": ["warn"]
             }
@@ -20,7 +20,7 @@
     "register": {
         "devPlugin": {
             "register": {
-                "$filter": "NODE_ENV",
+                "$filter": "env.NODE_ENV",
                 "$default": "require:../devPlugin.js",
                 "production": "require:../plugin.js"
             }
@@ -28,27 +28,6 @@
         "otherPlugin": {
             "register": "require:../otherPlugin.js",
             "before": "devPlugin",
-            "select": ["web"]
-        }
-    },
-    "routes": {
-        "testRoute": {
-            "path": "/test",
-            "method": "GET",
-            "handler": {
-                "module": "require:../handler.js",
-                "method": "createHandler",
-                "arguments": [
-                    "testArgument"
-                ]
-            },
-            "config": {},
-            "select": ["web"]
-        },
-        "testRoute2": {
-            "path": "/test2",
-            "method": "GET",
-            "handler": "require:../handler.js",
             "select": ["web"]
         }
     }

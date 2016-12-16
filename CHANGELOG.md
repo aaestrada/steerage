@@ -1,4 +1,8 @@
 
+### v3.0.3
+
+- Default criteria for `confidence` is `{ env: process.env }`.
+
 ### v3.0.2
 
 - Updated hapi support to include 15 and 16.
