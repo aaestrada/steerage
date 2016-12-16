@@ -1,4 +1,8 @@
 
+### v3.0.1
+
+- Fixed disabling a plugin from being registered via hook.
+
 ### v3.0.0
 
 - Added lifecycle hooks `config`, `connection`, `register`.
