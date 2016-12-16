@@ -105,4 +105,41 @@ Test('test steerage', (t) => {
         }
     }));
 
+    t.test('error in compose', Async(function *(t) {
+        t.plan(1);
+
+        try {
+            yield Steerage({
+                config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
+                hooks: {
+                    config(config, callback) {
+                        config.register.devPlugin = {};
+                        callback(null, config);
+                    }
+                }
+            });
+        }
+        catch (error) {
+            t.pass('received error.');
+        }
+    }));
+
+    t.test('error in hook', Async(function *(t) {
+        t.plan(1);
+
+        try {
+            yield Steerage({
+                config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
+                hooks: {
+                    config(config, callback) {
+                        callback(new Error('blamo'));
+                    }
+                }
+            });
+        }
+        catch (error) {
+            t.pass('received error.');
+        }
+    }));
+
 });
