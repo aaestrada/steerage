@@ -16,7 +16,7 @@ It takes the following arguments:
     - `hooks` - an optional object containing hook functions consisting of:
         - `config(manifest, callback)` - hook for modifying config prior to compose.
         - `connection(name, config, callback)` - hook for modifying the server connection config before added.
-        - `register(name, options, callback)` - hook for modifying the plugin options before register.
+        - `register(name, config, callback)` - hook for modifying the plugin config before register.
     - `protocols` - optional additional custom protocols for `shortstop`.
     - `environment` - optional additional criteria for `confidence` property resolution.
 - `callback(error, server)` - an optional callback - omitting returns a promise.
@@ -28,6 +28,7 @@ The resulting configuration (please see [Confidence](https://github.com/hapijs/c
 - `server` - optional [server options](http://hapijs.com/api#new-serveroptions).
 - `connections` - object defining [server connections](http://hapijs.com/api#serverconnectionoptions), with key name being a default label.
 - `register` - an object defining [plugins](http://hapijs.com/api#plugins), with optional additional properties:
+    - `enabled` - can be set to `false` to disable registering this plugin (defaults to `true`).
     - `select` - passed to `register`.
     - `before` - a string or array of strings of plugin names (keys in the `plugins` object) used to reorder.
     - `after` - a string or array of strings of plugin names used to reorder.
