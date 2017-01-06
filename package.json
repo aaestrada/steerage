@@ -1,7 +1,7 @@
 {
   "name": "steerage",
-  "description": "Hapi server configuration and composition using confidence, topo, and shortstop.",
-  "version": "3.0.3",
+  "description": "Hapi plugin for server configuration and composition using confidence, topo, and shortstop.",
+  "version": "4.0.0",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",
@@ -15,6 +15,8 @@
     "co": "^4.6.0",
     "confidence": "^3.0.1",
     "entries": "^1.0.1",
+    "hoek": "^4.1.0",
+    "joi": "^10.0.6",
     "shortstop": "^1.0.3",
     "shortstop-handlers": "^1.0.1",
     "shush": "^1.0.0",
@@ -36,5 +38,6 @@
     "lint": "eslint lib",
     "test": "tape test/*.js"
   },
-  "main": "./lib"
+  "main": "./lib",
+  "license": "MIT"
 }
