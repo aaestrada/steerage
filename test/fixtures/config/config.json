@@ -1,5 +1,8 @@
 {
     "server": {
+        "app": {
+            "name": "testApp"
+        },
         "debug": {
             "log": {
                 "$filter": "env.NODE_ENV",

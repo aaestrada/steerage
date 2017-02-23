@@ -28,8 +28,8 @@ server.register({
 
     //Do other stuffs with server object.
 
-    //Also, config values available via server.app.config, for example:
-    server.app.config.get('/server');
+    //Also, app config values available via server.app.config, for example:
+    server.app.config.get('name');
 
     server.start(() => {
         for (let connection of server.connections) {
@@ -69,6 +69,9 @@ Example:
 ```json
 {
     "server": {
+        "app": {
+            "name": "testApp"
+        },
         "debug": {
             "log": {
                 "$filter": "env.NODE_ENV",

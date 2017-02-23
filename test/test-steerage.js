@@ -7,7 +7,7 @@ const Path = require('path');
 const Hapi = require('hapi');
 
 Test('configures', Async(function *(t) {
-    t.plan(6);
+    t.plan(7);
 
     const server = new Hapi.Server();
 
@@ -29,7 +29,11 @@ Test('configures', Async(function *(t) {
 
         t.equal(plugins[0], 'otherPlugin', 're-ordered plugins.');
 
-        t.ok(server.app.config.get('/server'), 'server.app.config accessible.');
+        t.equal(server.app.config.get('name'), 'testApp', 'server.app.config get.');
+
+        server.app.config.set('hello.world', 'hello world!');
+
+        t.equal(server.app.config.get('hello.world'), 'hello world!', 'server.app.config set.');
     }
     catch (error) {
         console.log(error.stack);
