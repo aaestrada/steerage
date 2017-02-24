@@ -7,9 +7,13 @@ const Path = require('path');
 const Hapi = require('hapi');
 
 Test('configures', Async(function *(t) {
-    t.plan(6);
+    t.plan(9);
 
-    const server = new Hapi.Server();
+    const server = new Hapi.Server({
+        app: {
+            description: 'test'
+        }
+    });
 
     try {
         yield server.register({
@@ -29,7 +33,14 @@ Test('configures', Async(function *(t) {
 
         t.equal(plugins[0], 'otherPlugin', 're-ordered plugins.');
 
-        t.ok(server.app.config.get('/server'), 'server.app.config accessible.');
+        t.equal(server.settings.app.name, 'testApp', 'server.settings.app available.');
+        t.equal(server.settings.app.description, 'test', 'server.settings.app merged.');
+
+        t.equal(server.app.config.get('name'), 'testApp', 'server.app.config get.');
+
+        server.app.config.set('hello.world', 'hello world!');
+
+        t.equal(server.app.config.get('hello.world'), 'hello world!', 'server.app.config set.');
     }
     catch (error) {
         console.log(error.stack);
