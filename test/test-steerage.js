@@ -7,9 +7,13 @@ const Path = require('path');
 const Hapi = require('hapi');
 
 Test('configures', Async(function *(t) {
-    t.plan(7);
+    t.plan(9);
 
-    const server = new Hapi.Server();
+    const server = new Hapi.Server({
+        app: {
+            description: 'test'
+        }
+    });
 
     try {
         yield server.register({
@@ -28,6 +32,10 @@ Test('configures', Async(function *(t) {
         t.equal(plugins.length, 2, 'registered two plugins.');
 
         t.equal(plugins[0], 'otherPlugin', 're-ordered plugins.');
+
+        t.equal(server.settings.app.name, 'testApp', 'server.settings.app available.');
+
+        t.equal(server.settings.app.description, 'test', 'server.settings.app merged.');
 
         t.equal(server.app.config.get('name'), 'testApp', 'server.app.config get.');
 

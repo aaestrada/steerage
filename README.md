@@ -29,7 +29,8 @@ server.register({
     //Do other stuffs with server object.
 
     //Also, app config values available via server.app.config, for example:
-    server.app.config.get('name');
+    server.app.config.get('my.app.property');
+    //Where you can access deep properties.
 
     server.start(() => {
         for (let connection of server.connections) {

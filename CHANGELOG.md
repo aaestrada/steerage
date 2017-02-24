@@ -1,4 +1,9 @@
 
+### v5.0.0
+
+- [BREAKING] `server.settings.app` is now the runtime config, not a `confidence` store.
+- [BREAKING] `server.app.config` is now an accessor to `server.settings.app` with `get`, `set`.
+
 ### v4.0.0
 
 - [BREAKING] Converted to a plugin.
