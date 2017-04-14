@@ -1,4 +1,8 @@
 
+### Unreleased
+
+- `config` protocol support added.
+
 ### v5.0.0
 
 - [BREAKING] `server.settings.app` is now the runtime config, not a `confidence` store.

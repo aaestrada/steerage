@@ -7,7 +7,7 @@ const Path = require('path');
 const Hapi = require('hapi');
 
 Test('configures', Async(function *(t) {
-    t.plan(9);
+    t.plan(10);
 
     const server = new Hapi.Server({
         app: {
@@ -34,6 +34,8 @@ Test('configures', Async(function *(t) {
         t.equal(plugins[0], 'otherPlugin', 're-ordered plugins.');
 
         t.equal(server.settings.app.name, 'testApp', 'server.settings.app available.');
+
+        t.equal(server.settings.app.nameCopy, 'testApp', 'server.settings.nameCopy from config protocol.');
 
         t.equal(server.settings.app.description, 'test', 'server.settings.app merged.');
 
@@ -74,7 +76,6 @@ Test('environment', Async(function *(t) {
         console.log(error.stack);
     }
 }));
-
 
 Test('hooks', Async(function *(t) {
 

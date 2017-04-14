@@ -53,6 +53,17 @@ WARNING: Do not `register` this plugin on a `connection`. Always use the root se
 - `protocols` - optional additional custom protocols for `shortstop`.
 - `environment` - optional additional criteria for `confidence` property resolution and defaults to `{ env: process.env }`.
 
+### Default protocols
+
+- `file` - read a file.
+- `path` - resolve a path.
+- `base64` - resolve a base64 string.
+- `env` - access an environment variable.
+- `require` - require a javascript or json file.
+- `exec` - execute a function.
+- `glob` - match files using the patterns shell uses.
+- `config` - access another property in the config.
+
 ### Manifest
 
 The resulting configuration (please see [Confidence](https://github.com/hapijs/confidence)) should contain the (minimum) following:

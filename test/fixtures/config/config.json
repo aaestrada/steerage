@@ -1,7 +1,8 @@
 {
     "server": {
         "app": {
-            "name": "testApp"
+            "name": "testApp",
+            "nameCopy": "config:server.app.name"
         },
         "debug": {
             "log": {
