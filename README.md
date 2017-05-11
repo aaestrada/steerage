@@ -47,7 +47,7 @@ WARNING: Do not `register` this plugin on a `connection`. Always use the root se
 - `config` - a fully resolved path to a configuration document (relative paths in this document are from the document's location).
 - `basedir` - optional alternative location to base `shortstop` relative paths from.
 - `hooks` - an optional object containing hook functions consisting of:
-    - `config(manifest, callback)` - hook for modifying config prior to compose.
+    - `config(store, callback)` - hook for modifying config prior to compose.
     - `connection(name, config, callback)` - hook for modifying the server connection config before added.
     - `register(name, config, callback)` - hook for modifying the plugin config before register.
 - `protocols` - optional additional custom protocols for `shortstop`.
@@ -63,6 +63,7 @@ WARNING: Do not `register` this plugin on a `connection`. Always use the root se
 - `exec` - execute a function.
 - `glob` - match files using the patterns shell uses.
 - `config` - access another property in the config.
+- `import` - imports another JSON file, supports comments.
 
 ### Manifest
 
