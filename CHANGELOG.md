@@ -1,4 +1,8 @@
 
+### 6.0.1
+
+- Bump to `determination@2.0.0` to get protocol handler context binding.
+
 ### 6.0.0
 
 - Use `determination` for configuration resolution.
