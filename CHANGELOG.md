@@ -1,4 +1,9 @@
 
+### 6.0.0
+
+- Use `determination` for configuration resolution.
+- [BREAKING] `onconfig` passes a `determination` config store instead of raw JSON.
+
 ### v5.0.1
 
 - `config` protocol support added.
