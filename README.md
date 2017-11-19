@@ -15,12 +15,18 @@ const Hapi = require('hapi');
 
 const steerage = await Steerage.init({ config: Path.join(__dirname, 'config', 'config.json') });
 
-const server = new Hapi.Server(steerage.config);
+const server = new Hapi.Server(steerage.config.server);
 
 await server.register(steerage);
 
 server.start();
 ```
+
+### API
+
+- `init(options)` - a promise that returns a new Steerage plugin. In addition, this plugin will have the following properties:
+    - `config` - contains the fully resolved configuration specified in `options`.
+
 
 ### Configuration options
 
