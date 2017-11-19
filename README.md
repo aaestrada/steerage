@@ -48,7 +48,6 @@ WARNING: Do not `register` this plugin on a `connection`. Always use the root se
 - `basedir` - optional alternative location to base `shortstop` relative paths from.
 - `hooks` - an optional object containing hook functions consisting of:
     - `config(store, callback)` - hook for modifying config prior to compose.
-    - `connection(name, config, callback)` - hook for modifying the server connection config before added.
     - `register(name, config, callback)` - hook for modifying the plugin config before register.
 - `protocols` - optional additional custom protocols for `shortstop`.
 - `environment` - optional additional criteria for `confidence` property resolution and defaults to `{ env: process.env }`.

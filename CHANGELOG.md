@@ -3,7 +3,7 @@
 
 - Update to support hapi@17.x and node 8.x.
 - BREAKING: Support for connections removed.
-- BREAKING: `onconnection` callback removed (see above).
+- BREAKING: `connection` hook removed (see above).
 - BREAKING: Support for select on plugins removed.
 - BREAKING: Under manifest's `register` section, each object's `register` attribute is renamed `plugin`.
 
