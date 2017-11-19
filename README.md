@@ -13,34 +13,14 @@ const Path = require('path');
 const Steerage = require('steerage');
 const Hapi = require('hapi');
 
-const server = new Hapi.Server();
+const steerage = await Steerage.init({ config: Path.join(__dirname, 'config', 'config.json') });
 
-server.register({
-    register: Steerage,
-    options: {
-        config: Path.join(__dirname, 'config', 'config.json')
-    }
-}, (error) => {
-    if (error) {
-        console.error(error.stack);
-        return;
-    }
+const server = new Hapi.Server(steerage.config);
 
-    //Do other stuffs with server object.
+await server.register(steerage);
 
-    //Also, app config values available via server.app.config, for example:
-    server.app.config.get('my.app.property');
-    //Where you can access deep properties.
-
-    server.start(() => {
-        for (let connection of server.connections) {
-            console.log(`${connection.settings.labels} server running at ${connection.info.uri}`)
-        }
-    });
-});
+server.start();
 ```
-
-WARNING: Do not `register` this plugin on a `connection`. Always use the root server.
 
 ### Configuration options
 
@@ -69,7 +49,6 @@ WARNING: Do not `register` this plugin on a `connection`. Always use the root se
 The resulting configuration (please see [Confidence](https://github.com/hapijs/confidence)) should contain the (minimum) following:
 
 - `server` - optional [server settings](https://hapijs.com/api#serversettings) overrides.
-- `connections` - object defining [server connections](http://hapijs.com/api#serverconnectionoptions), with key name being a default label.
 - `register` - an object defining [plugins](http://hapijs.com/api#plugins), with optional additional properties:
     - `plugin` - Hapi 17 plugin object.
     - `enabled` - can be set to `false` to disable registering this plugin (defaults to `true`).
@@ -107,6 +86,11 @@ Example:
 }
 ```
 
-In addition, the [Confidence](https://github.com/hapijs/confidence) configuration store will be accessible as `server.app.config`.
+In addition, the [Confidence](https://github.com/hapijs/confidence) configuration store will be accessible as `server.app.config`. This config object allows access to deep properties:
+
+```
+server.app.config.get('my.app.property');
+server.app.config.set('my.app.property', true);
+```
 
 The resolved (for the `environment` at start time) JSON configuration can be viewed as `server.settings.app`.
