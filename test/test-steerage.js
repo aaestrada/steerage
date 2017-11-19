@@ -41,12 +41,12 @@ Test('configures', async function (t) {
 Test.only('configures', async function (t) {
     t.plan(7);
 
-    const app = await Steerage.init({ config: Path.join(__dirname, 'fixtures', 'config', 'config.json') });
+    const steerage = await Steerage.init({ config: Path.join(__dirname, 'fixtures', 'config', 'config.json') });
 
-    const server = new Hapi.Server(app.config);
+    const server = new Hapi.Server(steerage.config);
 
     try {
-        await server.register(app);
+        await server.register(steerage);
 
         t.equal(server.settings.debug.log[0], 'debug', 'override of server settings.');
 

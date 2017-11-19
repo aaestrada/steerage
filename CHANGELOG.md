@@ -2,6 +2,7 @@
 ### 7.0.0
 
 - Update to support hapi@17.x and node 8.x.
+- BREAKING: Usage has changed. See README.
 - BREAKING: Support for connections removed.
 - BREAKING: `connection` hook removed (see above).
 - BREAKING: Support for select on plugins removed.
