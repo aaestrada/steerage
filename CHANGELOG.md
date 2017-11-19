@@ -1,4 +1,12 @@
 
+### 7.0.0
+
+- Update to support hapi@17.x and node 8.x.
+- BREAKING: Support for connections removed.
+- BREAKING: `onconnection` callback removed (see above).
+- BREAKING: Support for select on plugins removed.
+- BREAKING: Under manifest's `register` section, each object's `register` attribute is renamed `plugin`.
+
 ### 6.0.1
 
 - Bump to `determination@2.0.0` to get protocol handler context binding.

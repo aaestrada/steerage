@@ -72,8 +72,8 @@ The resulting configuration (please see [Confidence](https://github.com/hapijs/c
 - `server` - optional [server settings](https://hapijs.com/api#serversettings) overrides.
 - `connections` - object defining [server connections](http://hapijs.com/api#serverconnectionoptions), with key name being a default label.
 - `register` - an object defining [plugins](http://hapijs.com/api#plugins), with optional additional properties:
+    - `plugin` - Hapi 17 plugin object.
     - `enabled` - can be set to `false` to disable registering this plugin (defaults to `true`).
-    - `select` - passed to `register`.
     - `before` - a string or array of strings of plugin names (keys in the `plugins` object) used to reorder.
     - `after` - a string or array of strings of plugin names used to reorder.
 
@@ -93,26 +93,16 @@ Example:
             }
         }
     },
-    "connections": {
-        "api": {
-            "port": "env:API_PORT"
-        },
-        "web": {
-            "port": "env:WEB_PORT",
-            "labels": ["web"]
-        }
-    },
     "register": {
         "good": {
-            "register": "require:good",
+            "plugin": "require:good",
             "options": {
                 "reporters": {
                     "console": [{
                         "module": "good-console"
                     }, "stdout"]
                 }
-            },
-            "select": ["api", "web"]
+            }
         }
     }
 }

@@ -2,6 +2,9 @@
     "server": {
         "app": {
             "name": "testApp",
+            "nested": {
+
+            },
             "nameCopy": "config:server.app.name"
         },
         "debug": {
@@ -12,27 +15,17 @@
             }
         }
     },
-    "connections": {
-        "api": {
-            "port": 4000
-        },
-        "web": {
-            "port": 3000,
-            "labels": ["web"]
-        }
-    },
     "register": {
         "devPlugin": {
-            "register": {
+            "plugin": {
                 "$filter": "env.NODE_ENV",
                 "$default": "require:../devPlugin.js",
                 "production": "require:../plugin.js"
             }
         },
         "otherPlugin": {
-            "register": "require:../otherPlugin.js",
-            "before": "devPlugin",
-            "select": ["web"]
+            "plugin": "require:../otherPlugin.js",
+            "before": "devPlugin"
         }
     }
 }

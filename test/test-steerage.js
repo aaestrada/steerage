@@ -2,42 +2,63 @@
 
 const Test = require('tape');
 const Steerage = require('../lib');
-const Async = require('../lib/async');
 const Path = require('path');
 const Hapi = require('hapi');
 
-Test('configures', Async(function *(t) {
-    t.plan(10);
+Test('configures', async function (t) {
+    t.plan(1);
 
-    const server = new Hapi.Server({
-        app: {
-            description: 'test'
-        }
-    });
+    const init = async function (options = {}) {
+        const app = {
+            plugin: {
+                name: 'test',
+                version: '1.0.0',
+                register: function (server, options = {}) {
+                    console.log('registered.');
+                    console.log(JSON.stringify(options));
+                }
+            },
+            options: {
+                optionsPassed: true
+            }
+        };
+
+        app.config = { port: 8000 };
+
+        return app;
+    };
+
+    const app = await Catalyst.init({ config: Path.join('.', 'config.json') });
+
+    const server = new Hapi.Server(app.config);
+
+    await server.register(app);
+
+    t.pass();
+
+});
+
+Test.only('configures', async function (t) {
+    t.plan(7);
+
+    const app = await Steerage.init({ config: Path.join(__dirname, 'fixtures', 'config', 'config.json') });
+
+    const server = new Hapi.Server(app.config);
 
     try {
-        yield server.register({
-            register: Steerage,
-            options: {
-                config: Path.join(__dirname, 'fixtures', 'config', 'config.json')
-            }
-        });
+        await server.register(app);
 
         t.equal(server.settings.debug.log[0], 'debug', 'override of server settings.');
-        t.equal(server.connections.length, 2, 'set connections.');
-        t.ok(server.select('web').registrations.devPlugin, 'plugins present on connection.');
 
-        const plugins = Object.keys(server.select('web').registrations);
+        const plugins = Object.keys(server.registrations);
 
-        t.equal(plugins.length, 2, 'registered two plugins.');
+        t.equal(plugins.length, 3, 'registered two plugins.');
 
-        t.equal(plugins[0], 'otherPlugin', 're-ordered plugins.');
+        t.equal(plugins[1], 'otherPlugin', 're-ordered plugins.');
 
         t.equal(server.settings.app.name, 'testApp', 'server.settings.app available.');
 
-        t.equal(server.settings.app.nameCopy, 'testApp', 'server.settings.nameCopy from config protocol.');
-
-        t.equal(server.settings.app.description, 'test', 'server.settings.app merged.');
+        t.equal(server.settings.app.nameCopy, 'testApp', 'server.settings.app.nameCopy from config protocol.');
 
         t.equal(server.app.config.get('name'), 'testApp', 'server.app.config get.');
 
@@ -49,15 +70,15 @@ Test('configures', Async(function *(t) {
         console.log(error.stack);
     }
 
-}));
+});
 
-Test('environment', Async(function *(t) {
+Test('environment', async function (t) {
     t.plan(2);
 
     const server = new Hapi.Server();
 
     try {
-         yield server.register({
+         await server.register({
             register: Steerage,
             options: {
                 config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
@@ -75,14 +96,14 @@ Test('environment', Async(function *(t) {
     catch (error) {
         console.log(error.stack);
     }
-}));
+});
 
-Test('hooks', Async(function *(t) {
+Test('hooks', async function (t) {
 
     const server = new Hapi.Server();
 
     try {
-         yield server.register({
+         await server.register({
             register: Steerage,
             options: {
                 config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
@@ -108,14 +129,14 @@ Test('hooks', Async(function *(t) {
     catch (error) {
         console.log(error.stack);
     }
-}));
+});
 
-Test('disable plugin', Async(function *(t) {
+Test('disable plugin', async function (t) {
 
     const server = new Hapi.Server();
 
     try {
-         yield server.register({
+         await server.register({
             register: Steerage,
             options: {
                 config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
@@ -137,15 +158,15 @@ Test('disable plugin', Async(function *(t) {
     catch (error) {
         console.log(error.stack);
     }
-}));
+});
 
-Test('error in compose', Async(function *(t) {
+Test('error in compose', async function (t) {
     t.plan(1);
 
     const server = new Hapi.Server();
 
     try {
-         yield server.register({
+         await server.register({
             register: Steerage,
             options: {
                 config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
@@ -161,15 +182,15 @@ Test('error in compose', Async(function *(t) {
     catch (error) {
         t.pass('received error.');
     }
-}));
+});
 
-Test('error in hook', Async(function *(t) {
+Test('error in hook', async function (t) {
     t.plan(1);
 
     const server = new Hapi.Server();
 
     try {
-         yield server.register({
+         await server.register({
             register: Steerage,
             options: {
                 config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
@@ -184,4 +205,4 @@ Test('error in hook', Async(function *(t) {
     catch (error) {
         t.pass('received error.');
     }
-}));
+});

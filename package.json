@@ -1,7 +1,7 @@
 {
   "name": "steerage",
   "description": "Hapi plugin for server configuration and composition using confidence, topo, and shortstop.",
-  "version": "6.0.1",
+  "version": "7.0.0",
   "author": "Trevor Livingston <tlivings@gmail.com>",
   "repository": {
     "type": "git",
@@ -9,25 +9,24 @@
   },
   "bugs": "http://github.com/tlivings/steerage/issues",
   "engines": {
-    "node": ">= 6.0.0"
+    "node": ">= 8.0.0"
   },
   "dependencies": {
-    "co": "^4.6.0",
     "determination": "^2.0.0",
     "dot-prop": "^4.1.1",
-    "hoek": "^4.1.0",
-    "joi": "^10.0.6",
+    "hoek": "^5.0.2",
+    "joi": "^13.0.2",
     "shortstop-handlers": "^1.0.1",
-    "topo": "^2.0.0"
+    "topo": "^3.0.0"
   },
   "peerDependencies": {
-    "hapi": ">=15.0.0 <17.0.0"
+    "hapi": ">=17.0.0 <18.0.0"
   },
   "devDependencies": {
-    "eslint": "^3.7.1",
-    "eslint-config-hapi": "^10.0.0",
+    "eslint": "^4.11.0",
+    "eslint-config-hapi": "^11.1.0",
     "eslint-plugin-hapi": "^4.0.0",
-    "hapi": "^16.0.0",
+    "hapi": "^17.0.1",
     "istanbul": "^0.4.1",
     "tape": "^4.2.2"
   },
