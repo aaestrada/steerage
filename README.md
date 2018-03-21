@@ -1,6 +1,6 @@
 # steerage
 
-Plugin for configuring and composing [Hapi](http://hapijs.com) (version `>= 15.0.0 < 17.0.0`) servers through configuration files.
+Plugin for configuring and composing [Hapi](http://hapijs.com) (version `>= 15.0.0 < 17.0.0`) servers through a configuration file or manifest.
 
 Leverages [Confidence](https://github.com/hapijs/confidence) for environment-aware configuration, [Shortstop](https://github.com/krakenjs/shortstop) for protocol handlers, and [Topo](https://github.com/hapijs/topo) for ordering.
 
@@ -13,28 +13,25 @@ const Path = require('path');
 const Steerage = require('steerage');
 const Hapi = require('hapi');
 
-const steerage = await Steerage.init({ config: Path.join(__dirname, 'config', 'config.json') });
+const [config, plugins] = await Steerage.init({ config: Path.join(__dirname, 'config', 'config.json') });
 
-const server = new Hapi.Server(steerage.config.server);
+const server = new Hapi.Server(config);
 
-await server.register(steerage);
+await server.register(plugins);
 
 server.start();
 ```
 
 ### API
 
-- `init(options)` - a promise that returns a new Steerage plugin. In addition, this plugin will have the following properties:
-    - `config` - contains the fully resolved configuration specified in `options`.
+- `init(options)` - a promise that returns a array containing a server configuration and a list of plugins to register.
 
 
 ### Configuration options
 
 - `config` - a fully resolved path to a configuration document (relative paths in this document are from the document's location).
 - `basedir` - optional alternative location to base `shortstop` relative paths from.
-- `hooks` - an optional object containing hook functions consisting of:
-    - `config(store, callback)` - hook for modifying config prior to compose.
-    - `register(name, config, callback)` - hook for modifying the plugin config before register.
+- `onconfig(store)` - hook for modifying config prior to creating list of plugins to register — may be async function or promise.
 - `protocols` - optional additional custom protocols for `shortstop`.
 - `environment` - optional additional criteria for `confidence` property resolution and defaults to `{ env: process.env }`.
 

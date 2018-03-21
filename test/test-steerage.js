@@ -8,20 +8,20 @@ const Hapi = require('hapi');
 Test('configures', async function (t) {
     t.plan(7);
 
-    const steerage = await Steerage.init({ config: Path.join(__dirname, 'fixtures', 'config', 'config.json') });
-
-    const server = new Hapi.Server(steerage.config.server);
-
     try {
-        await server.register(steerage);
+        const [config, plugins] = await Steerage.init({ config: Path.join(__dirname, 'fixtures', 'config', 'config.json') });
+
+        const server = new Hapi.Server(config);
+
+        await server.register(plugins);
 
         t.equal(server.settings.debug.log[0], 'debug', 'override of server settings.');
 
-        const plugins = Object.keys(server.registrations);
+        const registrations = Object.keys(server.registrations);
 
-        t.equal(plugins.length, 3, 'registered two plugins.');
+        t.equal(registrations.length, 3, 'registered two plugins.');
 
-        t.equal(plugins[1], 'otherPlugin', 're-ordered plugins.');
+        t.equal(registrations[1], 'otherPlugin', 're-ordered plugins.');
 
         t.equal(server.settings.app.name, 'testApp', 'server.settings.app available.');
 
@@ -42,19 +42,19 @@ Test('configures', async function (t) {
 Test('environment', async function (t) {
     t.plan(2);
 
-    const steerage = await Steerage.init({
-        config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
-        environment: {
-            env: {
-                NODE_ENV: 'production'
-            }
-        }
-    });
-
-    const server = new Hapi.Server(steerage.config.server);
-
     try {
-        await server.register(steerage);
+        const [config, plugins] = await Steerage.init({
+            config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
+            environment: {
+                env: {
+                    NODE_ENV: 'production'
+                }
+            }
+        });
+
+        const server = new Hapi.Server(config);
+
+        await server.register(plugins);
 
         t.equal(server.settings.debug.log[0], 'warn', 'server settings overriden by environment.');
         t.ok(server.registrations.prodPlugin, 'plugins present on connection.');
@@ -64,27 +64,23 @@ Test('environment', async function (t) {
     }
 });
 
-Test('hooks', async function (t) {
+Test('onconfig', async function (t) {
+    try {
+        let called = 0;
 
-    const steerage = await Steerage.init({
-        config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
-        hooks: {
-            config: async function (config) {
-                t.pass('called config hook');
-                return config;
-            },
-            register: async function (name, config) {
-                t.pass('called register hook');
+        const [config, plugins] = await Steerage.init({
+            config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
+            onconfig: async function (config) {
+                called++;
                 return config;
             }
-        }
-    });
+        });
 
-    const server = new Hapi.Server(steerage.config.server);
+        const server = new Hapi.Server(config);
 
-    try {
-        await server.register(steerage);
+        await server.register(plugins);
 
+        t.ok(called, 'onconfig hook called.');
         t.end();
     }
     catch (error) {
@@ -93,23 +89,18 @@ Test('hooks', async function (t) {
 });
 
 Test('disable plugin', async function (t) {
-
-    const steerage = await Steerage.init({
-        config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
-        hooks: {
-            register: async function (name, config) {
-                if (name === 'devPlugin') {
-                    config.enabled = false;
-                }
+    try {
+        const [config, plugins] = await Steerage.init({
+            config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
+            onconfig: function (config) {
+                config.set('register.devPlugin.enabled', false);
                 return config;
             }
-        }
-    });
+        });
 
-    const server = new Hapi.Server(steerage.config.server);
+        const server = new Hapi.Server(config);
 
-    try {
-        await server.register(steerage);
+        await server.register(plugins);
 
         t.ok(!server.registrations.devPlugin, 'did not register disabled plugin.');
 
@@ -120,23 +111,20 @@ Test('disable plugin', async function (t) {
     }
 });
 
-Test('error in compose', async function (t) {
+Test('error in registrations', async function (t) {
     t.plan(1);
 
     try {
-        const steerage = await Steerage.init({
+        const [config, plugins] = await Steerage.init({
             config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
-            hooks: {
-                config: async function (config) {
-                    config.register.devPlugin = {};
-                    return config;
-                }
+            onconfig: function (config) {
+                config.set('register.devPlugin', {});
             }
         });
 
-        const server = new Hapi.Server(steerage.config.server);
+        const server = new Hapi.Server(config);
 
-        await server.register(steerage);
+        await server.register(plugins);
     }
     catch (error) {
         t.pass('received error.');
@@ -147,18 +135,16 @@ Test('error in hook', async function (t) {
     t.plan(1);
 
     try {
-        const steerage = await Steerage.init({
+        const [config, plugins] = await Steerage.init({
             config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
-            hooks: {
-                config: async function (config) {
-                    throw new Error('Blamo!');
-                }
+            onconfig: function (config) {
+                throw new Error('blamo!');
             }
         });
 
-        const server = new Hapi.Server(steerage.config.server);
+        const server = new Hapi.Server(config);
 
-        await server.register(steerage);
+        await server.register(plugins);
     }
     catch (error) {
         t.pass('received error.');

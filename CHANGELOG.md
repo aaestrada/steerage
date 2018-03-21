@@ -7,6 +7,7 @@
 - BREAKING: `connection` hook removed (see above).
 - BREAKING: Support for select on plugins removed.
 - BREAKING: Under manifest's `register` section, each object's `register` attribute is renamed `plugin`.
+- BREAKING: `hooks` replaced with single `onconfig` function.
 
 ### 6.0.1
 
