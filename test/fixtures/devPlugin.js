@@ -1,12 +1,10 @@
 'use strict';
 
-const register = (server, options, next) => {
-    next();
-};
-
-register.attributes = {
+const plugin = {
     name: 'devPlugin',
-    version: '1.0.0'
+    version: '1.0.0',
+    register: function (server, options) {
+    }
 };
 
-module.exports.register = register;
+module.exports = plugin;
