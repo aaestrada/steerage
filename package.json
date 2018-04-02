@@ -26,8 +26,7 @@
     "eslint": "^4.11.0",
     "eslint-config-hapi": "^11.1.0",
     "eslint-plugin-hapi": "^4.0.0",
-    "hapi": "^17.0.1",
-    "istanbul": "^0.4.1",
+    "istanbul": "^0.4.5",
     "tape": "^4.2.2"
   },
   "scripts": {

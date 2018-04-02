@@ -11,20 +11,15 @@ Includes hooks that enable boostrapping lifecycle events to be listened for.
 ```javascript
 const Path = require('path');
 const Steerage = require('steerage');
-const Hapi = require('hapi');
 
-const [config, plugins] = await Steerage.init({ config: Path.join(__dirname, 'config', 'config.json') });
-
-const server = new Hapi.Server(config);
-
-await server.register(plugins);
+const server = await Steerage.init({ config: Path.join(__dirname, 'config', 'config.json') });
 
 server.start();
 ```
 
 ### API
 
-- `init(options)` - a promise that returns a array containing a server configuration and a list of plugins to register.
+- `init(options)` - a promise that returns a configured hapi server.
 
 
 ### Configuration options
