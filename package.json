@@ -28,11 +28,11 @@
     "eslint-config-hapi": "^11.1.0",
     "eslint-plugin-hapi": "^4.0.0",
     "hapi": "^17.3.1",
-    "istanbul": "^0.4.5",
+    "nyc": "^11.6.0",
     "tape": "^4.2.2"
   },
   "scripts": {
-    "cover": "istanbul cover tape -- test/*.js",
+    "cover": "nyc npm test",
     "lint": "eslint lib",
     "test": "tape test/*.js"
   },
