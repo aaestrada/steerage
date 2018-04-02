@@ -1,6 +1,6 @@
 # steerage
 
-Plugin for configuring and composing [Hapi](http://hapijs.com) (version `>= 15.0.0 < 17.0.0`) servers through a configuration file or manifest.
+Plugin for configuring and composing [Hapi](http://hapijs.com) (version `>= 17.0.0 < 18.0.0`) servers through a configuration file or manifest.
 
 Leverages [Confidence](https://github.com/hapijs/confidence) for environment-aware configuration, [Shortstop](https://github.com/krakenjs/shortstop) for protocol handlers, and [Topo](https://github.com/hapijs/topo) for ordering.
 
