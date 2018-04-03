@@ -84,7 +84,7 @@ Example:
 }
 ```
 
-In addition, the [Confidence](https://github.com/hapijs/confidence) configuration store will be accessible as `server.app.config`. This config object allows access to deep properties:
+In addition, the configuration will be accessible as `server.app.config`. This config object allows access to deep properties:
 
 ```
 server.app.config.get('my.app.property');
