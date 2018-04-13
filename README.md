@@ -2,9 +2,7 @@
 
 Plugin for configuring and composing [Hapi](http://hapijs.com) (version `>= 17.0.0 < 18.0.0`) servers through a configuration file or manifest.
 
-Leverages [Confidence](https://github.com/hapijs/confidence) for environment-aware configuration, [Shortstop](https://github.com/krakenjs/shortstop) for protocol handlers, and [Topo](https://github.com/hapijs/topo) for ordering.
-
-Includes hooks that enable boostrapping lifecycle events to be listened for.
+Supports environment-aware configuration and more using [determination](https://github.com/tlivings/determination).
 
 ### Usage
 
@@ -12,25 +10,48 @@ Includes hooks that enable boostrapping lifecycle events to be listened for.
 const Path = require('path');
 const Steerage = require('steerage');
 
-const server = await Steerage.init({ config: Path.join(__dirname, 'config', 'config.json') });
-
-server.start();
+Steerage.init({ config: Path.join(__dirname, 'config', 'config.json') }).then((server) => {
+    server.start();
+});
 ```
 
 ### API
 
 - `init(options)` - a promise that returns a configured hapi server.
 
-
 ### Configuration options
 
 - `config` - a fully resolved path to a configuration document (relative paths in this document are from the document's location).
-- `basedir` - optional alternative location to base `shortstop` relative paths from.
+- `basedir` - optional alternative location to base [shortstop](https://github.com/krakenjs/shortstop) relative paths from.
 - `onconfig(store)` - hook for modifying config prior to creating list of plugins to register — may be async function or promise.
-- `protocols` - optional additional custom protocols for `shortstop`.
-- `environment` - optional additional criteria for `confidence` property resolution and defaults to `{ env: process.env }`.
+- `protocols` - optional additional custom [shortstop](https://github.com/krakenjs/shortstop) protocols.
+- `environment` - optional additional criteria for [confidence](https://github.com/hapijs/confidence) property resolution and defaults to `{ env: process.env }`.
 
-### Default protocols
+### Example onconfig hook
+
+`onconfig` might be used to merge one configuration into another.
+
+```javascript
+const Path = require('path');
+const Steerage = require('steerage');
+const Determination = require('determination');
+
+const overrideResolve = Determination.create({ config: Path.join(__dirname, 'config', 'overrides.json') });
+
+const onconfig = async function (configStore) {
+    const overrides = await overrideResolve.resolve();
+
+    configStore.use(overrides);
+
+    return configStore;
+};
+
+Steerage.init({ config: Path.join(__dirname, 'config', 'config.json'), onconfig }).then((server) => {
+    server.start();
+});
+```
+
+### Default supported configuration protocols
 
 - `file` - read a file.
 - `path` - resolve a path.
@@ -42,9 +63,11 @@ server.start();
 - `config` - access another property in the config.
 - `import` - imports another JSON file, supports comments.
 
+See [determination](https://github.com/tlivings/determination).
+
 ### Manifest
 
-The resulting configuration (please see [Confidence](https://github.com/hapijs/confidence)) should contain the (minimum) following:
+The resulting configuration (please see [determination](https://github.com/tlivings/determination)) should contain the (minimum) following:
 
 - `server` - optional [server settings](https://hapijs.com/api#serversettings) overrides.
 - `register` - an object defining [plugins](http://hapijs.com/api#plugins), with optional additional properties:

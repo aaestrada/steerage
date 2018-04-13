@@ -1,4 +1,8 @@
 
+### 7.0.1
+
+- Documentation update.
+
 ### 7.0.0
 
 - Update to support hapi@17.x and node 8.x.
