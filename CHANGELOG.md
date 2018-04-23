@@ -1,4 +1,8 @@
 
+### 7.0.2
+
+- Adjusted fixtures and server creation for Hapi 17.
+
 ### 7.0.1
 
 - Documentation update.
