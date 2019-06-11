@@ -27,7 +27,7 @@
     "@hapi/eslint-plugin-hapi": "^4.3.3",
     "@hapi/hapi": "^18.3.1",
     "eslint": "^5.15.1",
-    "nyc": "^13.3.0",
+    "nyc": "^14.1.1",
     "tape": "^4.2.2"
   },
   "scripts": {
