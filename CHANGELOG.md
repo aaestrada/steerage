@@ -1,4 +1,8 @@
 
+### 8.1.0
+
+- Adeed `routes` configuration #14
+
 ### 8.0.0
 
 - Update to support hapi v18 and to use @hapi scoped packages
