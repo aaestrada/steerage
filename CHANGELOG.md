@@ -1,7 +1,12 @@
 
+### 9.0.0
+
+- Updated license and copyright
+- Updated dependencies (#15)
+
 ### 8.1.0
 
-- Adeed `routes` configuration #14
+- Added `routes` configuration #14
 
 ### 8.0.0
 

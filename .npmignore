@@ -1,0 +1,8 @@
+test/
+.vscode
+coverage/
+.nyc_output/
+.eslintrc
+.github
+.nycrc
+.dockerignore
