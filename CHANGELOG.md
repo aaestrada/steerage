@@ -1,5 +1,5 @@
 
-### 9.0.0
+### 8.1.1
 
 - Updated license and copyright
 - Updated dependencies (#15)
