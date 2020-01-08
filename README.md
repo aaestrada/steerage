@@ -6,9 +6,12 @@ Supports environment-aware configuration and more using [determination](https://
 
 ### Usage
 
+**Please note:**
+* Versions >=7 are now available as `@vrbo/steerage`. Releases are no longer published as `steerage`.
+
 ```javascript
 const Path = require('path');
-const Steerage = require('steerage');
+const Steerage = require('@vrbo/steerage');
 
 Steerage.init({ config: Path.join(__dirname, 'config', 'config.json') }).then((server) => {
     server.start();
@@ -33,7 +36,7 @@ Steerage.init({ config: Path.join(__dirname, 'config', 'config.json') }).then((s
 
 ```javascript
 const Path = require('path');
-const Steerage = require('steerage');
+const Steerage = require('@vrbo/steerage');
 const Determination = require('determination');
 
 const overrideResolve = Determination.create({ config: Path.join(__dirname, 'config', 'overrides.json') });
