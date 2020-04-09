@@ -1,3 +1,5 @@
+![](https://github.com/ExpediaGroup/steerage/workflows/Node_CI/badge.svg)
+
 # steerage
 
 Plugin for configuring and composing [Hapi](http://hapijs.com) servers through a configuration file or manifest.
