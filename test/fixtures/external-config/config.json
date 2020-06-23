@@ -1,0 +1,27 @@
+{
+    "server": {
+        "app": {
+            "name": "testAppExternalConfig",
+            "nested": {
+                "foo": "bar"
+            },
+            "nameCopy": "config:server.app.name"
+        }
+    },
+    "register": {
+        "externalConfigDevPlugin": {
+            "plugin": {
+                "$filter": "env.NODE_ENV",
+                "$default": "require:../externalConfigDevPlugin.js",
+                "production": "require:../plugin.js"
+            }
+        }
+    },
+    "routes": [
+        {
+            "path": "/admin-external",
+            "method": "GET",
+            "handler": "require:../admin"
+        }
+    ]
+}

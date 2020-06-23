@@ -86,6 +86,39 @@ Test('onconfig', async (t) => {
     }
 });
 
+Test('userConfigPaths', async (t) => {
+
+    try {
+        const server = await Steerage.init({
+            config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
+            userConfigPaths: [
+                Path.join(__dirname, 'fixtures', 'external-config', 'config.json')
+            ]
+        });
+
+        t.equal(server.app.config.get('name'), 'testAppExternalConfig', 'server.app.config get.');
+
+        const response = await server.inject({
+            method: 'GET',
+            url: '/admin-external'
+        });
+
+        t.ok(response.payload === 'OK', 'added route');
+
+        t.deepEqual(server.app.config.get(), { nested: { foo: 'bar' }, name: 'testAppExternalConfig', nameCopy: 'testAppExternalConfig' }, 'server.app.config.get entire config.');
+
+        const registrations = Object.keys(server.registrations);
+
+        t.equal(registrations.length, 4, 'adds external plugin to base config.');
+
+        t.equal(registrations[3], 'externalConfigDevPlugin', 'verify external plugin name added to base config.');
+        t.end();
+    }
+    catch (error) {
+        console.log(error.stack);
+    }
+});
+
 Test('disable plugin', async (t) => {
 
     try {
