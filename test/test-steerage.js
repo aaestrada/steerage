@@ -4,7 +4,8 @@ const Test = require('tape');
 const Steerage = require('../lib');
 const Path = require('path');
 
-Test('configures', async function (t) {
+Test('configures', async (t) => {
+
     t.plan(10);
 
     try {
@@ -41,7 +42,8 @@ Test('configures', async function (t) {
 
 });
 
-Test('environment', async function (t) {
+Test('environment', async (t) => {
+
     t.plan(2);
 
     try {
@@ -62,14 +64,16 @@ Test('environment', async function (t) {
     }
 });
 
-Test('onconfig', async function (t) {
+Test('onconfig', async (t) => {
+
     try {
         let called = 0;
 
-        const server = await Steerage.init({
+        await Steerage.init({
             config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
             onconfig: async function (config) {
-                called++;
+
+                await called++;
                 return config;
             }
         });
@@ -82,11 +86,13 @@ Test('onconfig', async function (t) {
     }
 });
 
-Test('disable plugin', async function (t) {
+Test('disable plugin', async (t) => {
+
     try {
         const server = await Steerage.init({
             config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
             onconfig: function (config) {
+
                 config.set('register.devPlugin.enabled', false);
                 return config;
             }
@@ -101,13 +107,15 @@ Test('disable plugin', async function (t) {
     }
 });
 
-Test('error in registrations', async function (t) {
+Test('error in registrations', async (t) => {
+
     t.plan(1);
 
     try {
-        const server = await Steerage.init({
+        await Steerage.init({
             config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
             onconfig: function (config) {
+
                 config.set('register.devPlugin', {});
             }
         });
@@ -117,13 +125,16 @@ Test('error in registrations', async function (t) {
     }
 });
 
-Test('error in hook', async function (t) {
+Test('error in hook', async (t) => {
+
     t.plan(1);
 
     try {
-        const server = await Steerage.init({
+        await Steerage.init({
             config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
+
             onconfig: function (config) {
+
                 throw new Error('blamo!');
             }
         });
@@ -133,7 +144,8 @@ Test('error in hook', async function (t) {
     }
 });
 
-Test('adds a route', async function (t) {
+Test('adds a route', async (t) => {
+
     try {
         const server = await Steerage.init({
             config: Path.join(__dirname, 'fixtures', 'config', 'config.json')
@@ -142,7 +154,7 @@ Test('adds a route', async function (t) {
         const response = await server.inject({
             method: 'GET',
             url: '/admin'
-        })
+        });
 
         t.ok(response.payload === 'OK', 'added route');
 
