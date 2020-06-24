@@ -53,12 +53,12 @@ Test('mergeManifestConfigs', async (t) => {
     try {
         const resolved = await Utils.mergeManifestConfigs({
             basedir: null,
-            config: Path.join(__dirname,  'fixtures', 'config', 'config.json'),
+            config: [
+                Path.join(__dirname,  'fixtures', 'config', 'config.json'),
+                Path.join(__dirname, 'fixtures', 'external-config', 'config.json')
+            ],
             environment: { env: process.env },
-            protocols: {},
-            userConfigPaths: [
-                Path.join(__dirname,  'fixtures', 'external-config', 'config.json')
-            ]
+            protocols: {}
         });
 
         t.equal(resolved.get('server.app.nested.foo'), 'bar', 'contain value from provided user config file.');

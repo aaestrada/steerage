@@ -35,6 +35,7 @@ Test('configures', async (t) => {
 
         t.equal(server.app.config.get('foo'), 'bar', 'server.app.config reset.');
         t.equal(server.app.config.get('hello.world'), undefined, 'server.app.config reset.');
+        t.end();
     }
     catch (error) {
         console.log(error.stack);
@@ -86,12 +87,12 @@ Test('onconfig', async (t) => {
     }
 });
 
-Test('userConfigPaths', async (t) => {
+Test('multiple config paths', async (t) => {
 
     try {
         const server = await Steerage.init({
-            config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
-            userConfigPaths: [
+            config: [
+                Path.join(__dirname, 'fixtures', 'config', 'config.json'),
                 Path.join(__dirname, 'fixtures', 'external-config', 'config.json')
             ]
         });

@@ -27,12 +27,11 @@ Steerage.init({ config: Path.join(__dirname, 'config', 'config.json') }).then((s
 
 ### Configuration options
 
-- `config` - a fully resolved path to a configuration document (relative paths in this document are from the document's location).
+- `config` - String or array of fully resolved paths to configuration documents. Defaults to `[]`. (relative paths in this document are from the document's location).
 - `basedir` - optional alternative location to base [shortstop](https://github.com/krakenjs/shortstop) relative paths from.
 - `onconfig(store)` - hook for modifying config prior to creating list of plugins to register — may be async function or promise.
 - `protocols` - optional additional custom [shortstop](https://github.com/krakenjs/shortstop) protocols.
 - `environment` - optional additional criteria for [confidence](https://github.com/hapijs/confidence) property resolution and defaults to `{ env: process.env }`.
-- `userConfigPaths` - optional array of fully resolved paths to configuration documents. Defaults to `[]`.
 
 ### Example onconfig hook
 
@@ -58,22 +57,20 @@ Steerage.init({ config: Path.join(__dirname, 'config', 'config.json'), onconfig 
 });
 ```
 
-### Example userConfigPaths usage
+### Example usage for multiple configuration files
 
-Pass an array of fully resolved configuration document paths to `userConfigPaths` to merge each configuration into another. Configuration objects will be merged into the base configuration object initialized via the `config` option. Duplicate keys in configuration files will be overwritten upon merging. The values of the config file that is the first index of `userConfigPaths` takes precedence when merging.
+Pass an array of fully resolved configuration document paths to `config` to merge each configuration into another. NOTE: duplicate keys in configuration files will be overwritten upon merging. The values of the final config file in the `config` array takes precedence when merging.
 
 ```javascript
 const Path = require('path');
 const Steerage = require('@vrbo/steerage');
-const Determination = require('@vrbo/determination');
-
 
 Steerage.init(
     {
-        config: Path.join(__dirname, 'base', 'config.json'),
-        userConfigPaths: [
-            Path.join(__dirname, '..', 'final/config.json'), // Values of this config take precedence
-            Path.join(__dirname, '..', 'secondary/config.json')
+        config: [
+            Path.join(__dirname, 'base', 'config.json'),
+            Path.join(__dirname, '..', 'secondary/config.json'),
+            Path.join(__dirname, '..', 'final/config.json') // Values of this config take precedence
         ]
     }
 ).then((server) => {
