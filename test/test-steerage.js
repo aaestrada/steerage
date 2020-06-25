@@ -4,7 +4,8 @@ const Test = require('tape');
 const Steerage = require('../lib');
 const Path = require('path');
 
-Test('configures', async function (t) {
+Test('configures', async (t) => {
+
     t.plan(10);
 
     try {
@@ -34,6 +35,7 @@ Test('configures', async function (t) {
 
         t.equal(server.app.config.get('foo'), 'bar', 'server.app.config reset.');
         t.equal(server.app.config.get('hello.world'), undefined, 'server.app.config reset.');
+        t.end();
     }
     catch (error) {
         console.log(error.stack);
@@ -41,7 +43,8 @@ Test('configures', async function (t) {
 
 });
 
-Test('environment', async function (t) {
+Test('environment', async (t) => {
+
     t.plan(2);
 
     try {
@@ -62,14 +65,16 @@ Test('environment', async function (t) {
     }
 });
 
-Test('onconfig', async function (t) {
+Test('onconfig', async (t) => {
+
     try {
         let called = 0;
 
-        const server = await Steerage.init({
+        await Steerage.init({
             config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
             onconfig: async function (config) {
-                called++;
+
+                await called++;
                 return config;
             }
         });
@@ -82,11 +87,46 @@ Test('onconfig', async function (t) {
     }
 });
 
-Test('disable plugin', async function (t) {
+Test('multiple config paths', async (t) => {
+
+    try {
+        const server = await Steerage.init({
+            config: [
+                Path.join(__dirname, 'fixtures', 'config', 'config.json'),
+                Path.join(__dirname, 'fixtures', 'external-config', 'config.json')
+            ]
+        });
+
+        t.equal(server.app.config.get('name'), 'testAppExternalConfig', 'server.app.config get.');
+
+        const response = await server.inject({
+            method: 'GET',
+            url: '/admin-external'
+        });
+
+        t.ok(response.payload === 'OK', 'added route');
+
+        t.deepEqual(server.app.config.get(), { nested: { foo: 'bar' }, name: 'testAppExternalConfig', nameCopy: 'testAppExternalConfig' }, 'server.app.config.get entire config.');
+
+        const registrations = Object.keys(server.registrations);
+
+        t.equal(registrations.length, 4, 'adds external plugin to base config.');
+
+        t.equal(registrations[3], 'externalConfigDevPlugin', 'verify external plugin name added to base config.');
+        t.end();
+    }
+    catch (error) {
+        console.log(error.stack);
+    }
+});
+
+Test('disable plugin', async (t) => {
+
     try {
         const server = await Steerage.init({
             config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
             onconfig: function (config) {
+
                 config.set('register.devPlugin.enabled', false);
                 return config;
             }
@@ -101,13 +141,15 @@ Test('disable plugin', async function (t) {
     }
 });
 
-Test('error in registrations', async function (t) {
+Test('error in registrations', async (t) => {
+
     t.plan(1);
 
     try {
-        const server = await Steerage.init({
+        await Steerage.init({
             config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
             onconfig: function (config) {
+
                 config.set('register.devPlugin', {});
             }
         });
@@ -117,13 +159,16 @@ Test('error in registrations', async function (t) {
     }
 });
 
-Test('error in hook', async function (t) {
+Test('error in hook', async (t) => {
+
     t.plan(1);
 
     try {
-        const server = await Steerage.init({
+        await Steerage.init({
             config: Path.join(__dirname, 'fixtures', 'config', 'config.json'),
+
             onconfig: function (config) {
+
                 throw new Error('blamo!');
             }
         });
@@ -133,7 +178,8 @@ Test('error in hook', async function (t) {
     }
 });
 
-Test('adds a route', async function (t) {
+Test('adds a route', async (t) => {
+
     try {
         const server = await Steerage.init({
             config: Path.join(__dirname, 'fixtures', 'config', 'config.json')
@@ -142,7 +188,7 @@ Test('adds a route', async function (t) {
         const response = await server.inject({
             method: 'GET',
             url: '/admin'
-        })
+        });
 
         t.ok(response.payload === 'OK', 'added route');
 
