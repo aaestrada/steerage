@@ -27,11 +27,11 @@ Steerage.init({ config: Path.join(__dirname, 'config', 'config.json') }).then((s
 
 ### Configuration options
 
-- `config` - String or array of fully resolved paths to configuration documents. Defaults to `[]`. (relative paths in this document are from the document's location).
-- `basedir` - optional alternative location to base [shortstop](https://github.com/krakenjs/shortstop) relative paths from.
-- `onconfig(store)` - hook for modifying config prior to creating list of plugins to register — may be async function or promise.
-- `protocols` - optional additional custom [shortstop](https://github.com/krakenjs/shortstop) protocols.
-- `environment` - optional additional criteria for [confidence](https://github.com/hapijs/confidence) property resolution and defaults to `{ env: process.env }`.
+- `config` - (Required) String or array of fully resolved paths to configuration documents. (relative paths in this document are from the document's location).
+- `basedir` - (Optional) Alternative location to base [shortstop](https://github.com/krakenjs/shortstop) relative paths from.
+- `onconfig(store)` - Hook for modifying config prior to creating list of plugins to register — may be async function or promise.
+- `protocols` - (Optional) Additional custom [shortstop](https://github.com/krakenjs/shortstop) protocols.
+- `environment` - (Optional) Additional criteria for [confidence](https://github.com/hapijs/confidence) property resolution and defaults to `{ env: process.env }`.
 
 ### Example onconfig hook
 
