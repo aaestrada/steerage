@@ -1,3 +1,9 @@
+### 9.0.0
+
+- [Breaking] Drop support for node < 12.
+- Update Github test workflow to only test againt node v 12.x
+- Update dependencies, npm, and engines in package.json to support node version >= 12.
+
 ### 8.4.0
 - Add support for multiple manifest files. The `config` option now takes either a String or Array of fully resolved paths to configuration documents. If multiple paths are provided, they are merged together.
 
