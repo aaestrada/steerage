@@ -1,3 +1,10 @@
+## [9.0.1](https://github.com/expediagroup/steerage/compare/v9.0.0...v9.0.1) (2020-08-12)
+
+
+### Bug Fixes
+
+* **deps:** Bump dot-prop from 4.2.0 to 5.2.0 ([#26](https://github.com/expediagroup/steerage/issues/26)) ([b17ff63](https://github.com/expediagroup/steerage/commit/b17ff63e94bef4cb08399e02be92f3aa0e0b4bb0))
+
 ### 9.0.0
 
 - [Breaking] Drop support for node < 12.
