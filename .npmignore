@@ -6,3 +6,4 @@ coverage/
 .github
 .nycrc
 .dockerignore
+.releaserc.json
