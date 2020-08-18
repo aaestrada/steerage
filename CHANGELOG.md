@@ -1,3 +1,15 @@
+# [10.0.0](https://github.com/expediagroup/steerage/compare/v9.0.1...v10.0.0) (2020-08-18)
+
+
+### Features
+
+* Update to require Hapi v20; Update dependencies; ([#28](https://github.com/expediagroup/steerage/issues/28)) ([912897c](https://github.com/expediagroup/steerage/commit/912897c938d4fa020caa0448563ed9ee415a7e67))
+
+
+### BREAKING CHANGES
+
+* The Hapi peer dependency has been changed from `>=19` to `>=20`. Please install Hapi v20 to use this version of Steerage.
+
 ## [9.0.1](https://github.com/expediagroup/steerage/compare/v9.0.0...v9.0.1) (2020-08-12)
 
 
