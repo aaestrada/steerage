@@ -9,7 +9,7 @@
   },
   "bugs": "http://github.com/expediagroup/steerage/issues",
   "engines": {
-    "node": ">= 12.0.0",
+    "node": ">= 14.0.0",
     "npm": ">=6.0.0"
   },
   "publishConfig": {
@@ -24,12 +24,12 @@
     "shortstop-handlers": "^1.0.1"
   },
   "peerDependencies": {
-    "@hapi/hapi": ">=20.0.0"
+    "@hapi/hapi": ">=20.2.1"
   },
   "devDependencies": {
     "@hapi/eslint-config-hapi": "^13.0.0",
     "@hapi/eslint-plugin-hapi": "^4.3.3",
-    "@hapi/hapi": "^20.0.0",
+    "@hapi/hapi": "^20.2.1",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "eslint": "^7.7.0",
